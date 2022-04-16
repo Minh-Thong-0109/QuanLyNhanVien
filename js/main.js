@@ -4,6 +4,7 @@ function getEle(id) {
 
 var dsNV = new DanhSach();
 var validation = new Validation();
+var statusCapNhat = false;
 getLocalStorage();
 getEle("btnCapNhat").disabled = true;
 getEle("btnThemNV").disabled = false;
@@ -15,19 +16,9 @@ function layThongtinNV() {
   var _email = getEle("email").value;
   var _matKhau = getEle("password").value;
   var _ngayLam = getEle("datepicker").value;
-  var _luongCB = getEle("luongCB").value * 1;
+  var _luongCB = getEle("luongCB").value;
   var _chucVu = getEle("chucvu").value;
-  var _gioLam = getEle("gioLam").value * 1;
-  console.log(
-    _taiKhoan,
-    _tenNV,
-    _email,
-    _matKhau,
-    _ngayLam,
-    _luongCB,
-    _chucVu,
-    _gioLam
-  );
+  var _gioLam = getEle("gioLam").value;
 
   isValid &=
     validation.kiemtraRong(
@@ -36,8 +27,9 @@ function layThongtinNV() {
       "",
       "Tài khoản không được để trống"
     ) &&
-    validation.kiemtraDinhDangSo(
+    validation.kiemtraDinhDang(
       _taiKhoan,
+      "number",
       "tbTKNV",
       "Tài khoản phải là một chuổi ký số"
     ) &&
@@ -47,6 +39,13 @@ function layThongtinNV() {
       4,
       6,
       "Tài khoản phải có độ dài từ 4 đến 6 ký tự"
+    ) &&
+    validation.kiemtraTrung(
+      _taiKhoan,
+      "tbTKNV",
+      "Tài khoản này đã tồn tại",
+      dsNV.arr,
+      statusCapNhat
     );
 
   isValid &=
@@ -56,8 +55,9 @@ function layThongtinNV() {
       "",
       "Tên nhân viên không được để trống"
     ) &&
-    validation.kiemtraDinhDangChu(
+    validation.kiemtraDinhDang(
       _tenNV,
+      "string",
       "tbTen",
       "Tên nhân viên phải là một chuổi ký tự chữ"
     );
@@ -69,8 +69,9 @@ function layThongtinNV() {
       "",
       "Email không được để trống"
     ) &&
-    validation.kiemtraDinhDangEmail(
+    validation.kiemtraDinhDang(
       _email,
+      "email",
       "tbEmail",
       "Email không đúng định dạng"
     );
@@ -82,8 +83,9 @@ function layThongtinNV() {
       "",
       "Mật khẩu không được để trống"
     ) &&
-    validation.kiemtraDinhDangPass(
+    validation.kiemtraDinhDang(
       _matKhau,
+      "password",
       "tbMatKhau",
       "Mật khẩu phải là một chuổi ký tự bao gồm chữ Hoa, chữ thường, số và ký tự đặc biệt"
     ) &&
@@ -109,12 +111,13 @@ function layThongtinNV() {
       0,
       "Lương cơ bản không được để trống"
     ) &&
-    validation.kiemtraDinhDangSo(
+    validation.kiemtraDinhDang(
       _luongCB,
+      "number",
       "tbLuongCB",
       "Lương cơ bản phải là một chuổi số"
     ) &&
-    validation.kiemtraDoDai(
+    validation.kiemtraGioiHan(
       _luongCB,
       "tbLuongCB",
       1000000,
@@ -130,12 +133,13 @@ function layThongtinNV() {
   );
 
   isValid &=
-    validation.kiemtraDinhDangSo(
+    validation.kiemtraDinhDang(
       _gioLam,
+      "number",
       "tbGiolam",
       "Giờ làm phải là một chuổi số"
     ) &&
-    validation.kiemtraDoDai(
+    validation.kiemtraGioiHan(
       _gioLam,
       "tbGiolam",
       80,
@@ -215,6 +219,7 @@ function getLocalStorage() {
 
 getEle("btnThemNV").onclick = function () {
   getEle("btnCapNhat").disabled = true;
+  statusCapNhat = false;
   getEle("btnThemNV").disabled = false;
   var nhanVien = layThongtinNV();
   if (nhanVien != null) {
@@ -226,9 +231,10 @@ getEle("btnThemNV").onclick = function () {
 };
 
 getEle("btnDong").onclick = function () {
-  lamTrong();
   getEle("btnCapNhat").disabled = true;
+  statusCapNhat = false;
   getEle("btnThemNV").disabled = false;
+  lamTrong();
 };
 
 function xoaNV(taiKhoan) {
@@ -239,6 +245,7 @@ function xoaNV(taiKhoan) {
 
 function suaNV(taiKhoan) {
   getEle("btnCapNhat").disabled = false;
+  statusCapNhat = true;
   getEle("btnThemNV").disabled = true;
   var nhanVien = dsNV.layDuLieuNV(taiKhoan);
   var index = dsNV.arr.indexOf(nhanVien);

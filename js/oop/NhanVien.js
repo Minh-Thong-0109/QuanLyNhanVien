@@ -11,7 +11,15 @@ function NhanVien (_taiKhoan, _tenNV, _email, _matKhau, _ngayLam, _luongCB, _chu
     this.xepLoai = "";
 
     this.tongLuong = function () {
-        this.tongLuong = parseFloat(this.luongCB) * parseFloat(this.gioLam);
+        var heSo = 0;
+        if (this.chucVu == "Nhân viên") {
+            heSo = 1;
+        }   else if (this.chucVu == "Trưởng phòng") {
+            heSo = 2;
+        }   else if (this.chucVu == "Sếp") {
+            heSo = 3;
+        }
+        this.tongLuong = parseFloat(this.luongCB) * heSo;
     }
 
     this.xepLoai = function () {
