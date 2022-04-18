@@ -234,6 +234,7 @@ getEle("btnThem").onclick = function () {
   getEle("btnCapNhat").disabled = true;
   statusCapNhat = false;
   getEle("btnThemNV").disabled = false;
+  lamTrong();
 };
 
 getEle("btnThemNV").onclick = function () {
