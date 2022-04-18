@@ -4,7 +4,7 @@ function getEle(id) {
 
 function Validation() {
   this.kiemtraRong = function (value, id, condition, mess) {
-    if (value == condition) {
+    if (value === condition) {
       getEle(id).innerHTML = mess;
       getEle(id).style.display = "block";
       return false;
@@ -16,16 +16,16 @@ function Validation() {
 
   this.kiemtraDinhDang = function (value, format, id, mess) {
     var letter = "";
-    if (format == "number") {
+    if (format === "number") {
       letter = /^[0-9]+$/;
     } else if (format == "string") {
       letter =
         "^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +
         "ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ" +
         "ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$";
-    } else if (format == "email") {
+    } else if (format === "email") {
       letter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    } else if (format == "password") {
+    } else if (format === "password") {
       letter =
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{0,}$/;
     }
@@ -51,7 +51,7 @@ function Validation() {
   };
 
   this.kiemtraGioiHan = function (value, id, min, max, mess) {
-    if (value >= min && value <= max) {
+    if (value*1 >= min && value*1 <= max) {
       getEle(id).innerHTML = "";
       getEle(id).style.display = "none";
       return true;
@@ -80,5 +80,6 @@ function Validation() {
       getEle(divId).style.display = "block";
       return false;
     }
+    return true;
   };
 }

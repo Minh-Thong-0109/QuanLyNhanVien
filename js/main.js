@@ -11,6 +11,7 @@ getEle("btnThemNV").disabled = false;
 
 function layThongtinNV() {
   var isValid = true;
+  console.log(isValid);
   var _taiKhoan = getEle("tknv").value;
   var _tenNV = getEle("name").value;
   var _email = getEle("email").value;
@@ -19,6 +20,16 @@ function layThongtinNV() {
   var _luongCB = getEle("luongCB").value;
   var _chucVu = getEle("chucvu").value;
   var _gioLam = getEle("gioLam").value;
+  console.log(
+    _taiKhoan,
+    _tenNV,
+    _email,
+    _matKhau,
+    _ngayLam,
+    _luongCB,
+    _chucVu,
+    _gioLam
+  );
 
   isValid &=
     validation.kiemtraRong(
@@ -48,6 +59,7 @@ function layThongtinNV() {
       statusCapNhat
     );
 
+  console.log(isValid);
   isValid &=
     validation.kiemtraRong(
       _tenNV,
@@ -61,7 +73,7 @@ function layThongtinNV() {
       "tbTen",
       "Tên nhân viên phải là một chuổi ký tự chữ"
     );
-
+  console.log(isValid);
   isValid &=
     validation.kiemtraRong(
       _email,
@@ -75,7 +87,7 @@ function layThongtinNV() {
       "tbEmail",
       "Email không đúng định dạng"
     );
-
+  console.log(isValid);
   isValid &=
     validation.kiemtraRong(
       _matKhau,
@@ -96,14 +108,14 @@ function layThongtinNV() {
       10,
       "Mật khẩu phải có độ dài từ 6 đến 10 ký tự"
     );
-
+  console.log(isValid);
   isValid &= validation.kiemtraRong(
     _ngayLam,
     "tbNgay",
     "",
     "Ngày làm không được để trống"
   );
-
+  console.log(isValid);
   isValid &=
     validation.kiemtraRong(
       _luongCB,
@@ -124,14 +136,14 @@ function layThongtinNV() {
       20000000,
       "Lương cơ bản phải nằm trong khoảng từ 1,000,000 đến 20,000,000"
     );
-
+  console.log(isValid);
   isValid &= validation.kiemtraRong(
     _chucVu,
     "tbChucVu",
     "Chọn chức vụ",
     "Vui lòng chọn chức vụ phù hợp"
   );
-
+  console.log(isValid);
   isValid &=
     validation.kiemtraDinhDang(
       _gioLam,
@@ -146,6 +158,7 @@ function layThongtinNV() {
       200,
       "Giờ làm phải nằm trong khoảng từ 80 đến 200"
     );
+  console.log(isValid);
   if (isValid) {
     var nhanVien = new NhanVien(
       _taiKhoan,
@@ -217,11 +230,15 @@ function getLocalStorage() {
   }
 }
 
-getEle("btnThemNV").onclick = function () {
+getEle("btnThem").onclick = function () {
   getEle("btnCapNhat").disabled = true;
   statusCapNhat = false;
   getEle("btnThemNV").disabled = false;
+};
+
+getEle("btnThemNV").onclick = function () {
   var nhanVien = layThongtinNV();
+  console.log(nhanVien);
   if (nhanVien != null) {
     dsNV.themNV(nhanVien);
     taoBang(dsNV.arr);
